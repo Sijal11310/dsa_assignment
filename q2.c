@@ -26,14 +26,18 @@ char pop(struct stack *s) {
 
 //checks the precedence of the operator
 int precedence(char e) {
-    if (e == '^')
+    if (e == '^'){
         return 3;
-    else if (e == '*' || e == '/')
+    }
+    else if (e == '*' || e == '/'){
         return 2;
-    else if (e == '+' || e== '-')
+    }
+    else if (e == '+' || e== '-'){
         return 1;
-    else
+    }
+    else{
         return 0;
+    }
 }
 
 //checks if the character is a operator or not 
@@ -98,18 +102,23 @@ int main() {
 
     printf("Postfix expression %s \n", postfix);
 
+    //reset the stack for calculation of the postfix
     q->top = -1;
     i = 0;
 
     int ans = 0;
 
+    //traversal of postfix till the end
     while (postfix[i] != '\0') {
         
+        //if is not an operator then push it in stack 
         if (!isOperator(postfix[i])) {
             push(q, postfix[i]);
         } 
+
+        //if postfix[i] is operator then pop last 2 element and perform the calculation and push the answer in stack
         else {
-            int op2 = pop(q) - '0';
+            int op2 = pop(q) - '0';  //conversion from char to int
             int op1 = pop(q) - '0';
 
             if (postfix[i] == '+'){
@@ -131,12 +140,12 @@ int main() {
                 }
             }
 
-            push(q, ans + '0');
+            push(q, ans + '0'); //conversion from int to char
         }
         i++;
     }
 
-    ans = pop(q) - '0';
+    ans = pop(q) - '0';   //conversion from char to int
 
 
     printf("the answer of the expression is %d \n",ans);
